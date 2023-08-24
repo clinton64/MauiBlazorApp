@@ -1,0 +1,17 @@
+﻿@page "/logout"
+@using MauiBlazorApp.Data;
+
+@inject NavigationManager navigationManager
+@inject FRCM_API_Service service
+
+<div>
+    <button class="btn btn-outline-danger" @onclick="logoutClick">Log Out</button>
+</div>
+
+@code {
+    private async Task logoutClick()
+    {
+        await service.Logout();
+        navigationManager.NavigateTo("/");
+    }
+}

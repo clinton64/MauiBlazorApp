@@ -1,0 +1,287 @@
+﻿@page "/tabs"
+@using Microsoft.AspNetCore.Authorization
+<div class="container">
+    <div class="card">
+        <div class="form">
+            <div class="left-side">
+                <div class="left-heading">
+                    <h3>Inspection</h3>
+                </div>
+                <div class="steps-content">
+                    <h3>Step <span class="step-number"> @currentStep </span></h3>
+                    <p class="step-number-content @(currentStep == 1 ? "active" : "d-none")"> Enter the information related to Prior to Construction.</p>
+                    <p class="step-number-content @(currentStep == 2 ? "active" : "d-none")"> Enter the information related to FoundationConstruction.</p>
+                    <p class="step-number-content @(currentStep == 3 ? "active" : "d-none")"> Enter the information related to Plinth Ground Level.</p>
+                    <p class="step-number-content @(currentStep == 4 ? "active" : "d-none")"> Enter the information related to Upper Floor & Roof</p>
+                    <p class="step-number-content @(currentStep == 5 ? "active" : "d-none")"> Enter the information related to Construction Completion</p>
+                </div>
+                <ul class="progress-bar">
+                    <li class="@(currentStep == 1 ? "active" : "")"> Prior to Construction </li>
+                    <li class="@(currentStep == 2 ? "active" : "")"> Foundation </li>
+                    <li class="@(currentStep == 3 ? "active" : "")"> Plinth (Ground Level) </li>
+                    <li class="@(currentStep == 4 ? "active" : "")"> Upper Floor And Roof </li>
+                    <li class="@(currentStep == 5 ? "active" : "")"> Construction Completion and URU Certification</li>
+                </ul>
+            </div>
+            <div class="right-side">
+                <div class="main @(currentStep == 1 ? "active" : "")">
+                    <small><i class="fa fa-smile-o"></i></small>
+                    <div class="text">
+                        <h2>Prior to Construction Information</h2>
+                        <p>Enter the information related to Prior to Construction.</p>
+                    </div>
+                    <div class="input-text">
+                        <div class="input-div">
+                            <input type="text" required require id="user_name">
+                            <span>First Name</span>
+                        </div>
+                        <div class="input-div">
+                            <input type="text" required>
+                            <span>Last Name</span>
+                        </div>
+                    </div>
+                    <div class="input-text">
+                        <div class="input-div">
+                            <input type="text" required require>
+                            <span>Phone number</span>
+                        </div>
+                        <div class="input-div">
+                            <input type="text" required require>
+                            <span>E-mail Address</span>
+                        </div>
+                    </div>
+                    <div class="buttons">
+                        <button class="next_button" onclick="@NextClick">Next Step</button>
+                    </div>
+                </div>
+                <div class="main @(currentStep == 2 ? "active" : "")">
+                    <small><i class="fa fa-smile-o"></i></small>
+                    <div class="text">
+                        <h2>Foundation Information</h2>
+                        <p>Enter the information related to Foundation.</p>
+                    </div>
+                    <div class="input-group">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox">
+                            <label class="form-check-label">
+                                Minimum Continuous Footing Widths and depths
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" />
+                            <label class="form-check-label">
+                                Spread or isolated fotting sizes and depths
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox"/>
+                            <label class="form-check-label">
+                                Continuous footing reinforcing
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox"/>
+                            <label class="form-check-label">
+                                Dowels for walls at continuous footings
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox"/>
+                            <label class="form-check-label">
+                                Dowels for columns at spread or isolated footings
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" />
+                            <label class="form-check-label">
+                                Clearance to reinforcing
+                            </label>
+                        </div>
+                    </div>
+                    <br />
+                    <br />
+                    <div class="buttons button_space">
+                        <button class="back_button" onclick="@PreviousClick">Back</button>
+                        <button class="next_button" onclick="@NextClick">Next Step</button>
+                    </div>
+                </div>
+                <div class="main @(currentStep == 3 ? "active" : "")">
+                    <small><i class="fa fa-smile-o"></i></small>
+                    <div class="text">
+                        <h2>Plinth (Ground Level)</h2>
+                        <p>Enter the information related to Plinth Ground Level.</p>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                        <label class="form-check-label" for="flexCheckDefault">
+                            Ground Floor Plan Configuration
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                        <label class="form-check-label" for="flexCheckDefault">
+                            Building setbacks
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                        <label class="form-check-label" for="flexCheckDefault">
+                            Location and Configutation of Ramps
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                        <label class="form-check-label" for="flexCheckDefault">
+                            Basement Walls
+                        </label>
+                    </div>
+                    <div class="input-text">
+                        <div class="input-div">
+                            <input type="text" required>
+                            <span>Total Ground Floor Area</span>
+                        </div>
+                        <div class="input-div">
+                            <input type="text" required>
+                            <span>Floor height from Road</span>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label for="picture">Take a picture of Gorund Floor and Road:</label>
+                        <input type="file"
+                               name="picture"
+                               accept="image/*"
+                               capture="">
+                    </div>
+
+                    <br />
+                    <br />
+                    <div class="buttons button_space">
+                        <button class="back_button" onclick="@PreviousClick">Back</button>
+                        <button class="next_button" onclick="@NextClick">Next Step</button>
+                    </div>
+                </div>
+                <div class="main @(currentStep == 4 ? "active" : "")">
+                    <small><i class="fa fa-smile-o"></i></small>
+                    <div class="text">
+                        <h2>Upper Floor Level and Roof Levels</h2>
+                        <p>Enter the information related to Upper Floor Level and Roof Levels.</p>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                        <label class="form-check-label" for="flexCheckDefault">
+                            Ground Floor Plan Configuration
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                        <label class="form-check-label" for="flexCheckDefault">
+                            Building setbacks
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                        <label class="form-check-label" for="flexCheckDefault">
+                            Location and Configutation of Ramps
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                        <label class="form-check-label" for="flexCheckDefault">
+                            Basement Walls
+                        </label>
+                    </div>
+                    <div class="input-text">
+                        <div class="input-div">
+                            <input type="text" required>
+                            <span>Total Ground Floor Area</span>
+                        </div>
+                        <div class="input-div">
+                            <input type="text" required>
+                            <span>Floor height from Road</span>
+                        </div>
+                    </div>
+                    <div class="buttons button_space">
+                        <button class="back_button" onclick="@PreviousClick">Back</button>
+                        <button class="next_button" onclick="@NextClick">Next Step</button>
+                    </div>
+                </div>
+                <div class="main @(currentStep == 5 ? "active" : "")">
+                    <small><i class="fa fa-smile-o"></i></small>
+                    <div class="text">
+                        <h2>Construction Completion</h2>
+                        <p>Enter the information related to Construction Completion.</p>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                        <label class="form-check-label" for="flexCheckDefault">
+                            Ground Floor Plan Configuration
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                        <label class="form-check-label" for="flexCheckDefault">
+                            Building setbacks
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                        <label class="form-check-label" for="flexCheckDefault">
+                            Location and Configutation of Ramps
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                        <label class="form-check-label" for="flexCheckDefault">
+                            Basement Walls
+                        </label>
+                    </div>
+                    <div class="input-text">
+                        <div class="input-div">
+                            <input type="text" required>
+                            <span>Total Ground Floor Area</span>
+                        </div>
+                        <div class="input-div">
+                            <input type="text" required>
+                            <span>Floor height from Road</span>
+                        </div>
+                    </div>
+                    <div class="buttons button_space">
+                        <button class="back_button" onclick="@PreviousClick">Back</button>
+                        <button class="submit_button" onclick="@NextClick">Submit</button>
+                    </div>
+                </div>
+                <div class="main @(currentStep == 6 ? "active" : "")">
+                    <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                        <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none" />
+                        <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" />
+                    </svg>
+
+                    <div class="text congrats">
+                        <h2> Process Completed !</h2>
+                        <p>The information have been updated successfully in the system.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@code {
+    private int currentStep = 1;
+    private double opacity;
+
+    private void NextClick()
+    {
+        if (currentStep < 6) // There are 4 steps in total
+        {
+            currentStep++;
+        }
+    }
+
+    private void PreviousClick()
+    {
+        if (currentStep > 1)
+        {
+            currentStep--;
+        }
+    }
+}

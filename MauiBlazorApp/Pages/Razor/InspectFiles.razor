@@ -1,0 +1,65 @@
+﻿@page "/inspection"
+@using MauiBlazorApp.Data;
+@using MauiBlazorApp.Model.ViewModels;
+@implements IDisposable
+@inject IJSRuntime JS
+@inject FRCM_API_Service service
+
+<h2>Inspection Files</h2>
+<p>List of Inspection Files</p>
+@if(Inspections == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table" id="frcm_table">
+        <thead>
+            <tr>
+                <th>caseID</th>
+                <th>caseNo</th>
+                <th>projectNo</th>
+                <th>plotNo</th>
+                <th>fullName</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var inspection in Inspections)
+            {
+                <tr>
+                    <td>@inspection.caseID</td>
+                    <td>@inspection.caseNo</td>
+                    <td>@inspection.projectNo</td>
+                    <td>@inspection.plotNo</td>
+                    <td>@inspection.fullName</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+
+@code{
+    InspectionResponseModel[] Inspections { get; set; }
+    //InspectionResponseModel[] Inspections { get; set; } = null;
+
+    protected override void OnInitialized()
+    {
+        Inspections = ApplicationDataService.GetInspections();
+        //service.GetInspections();
+        //Inspections = service.Inspections;
+    }
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await base.OnAfterRenderAsync(firstRender);
+        if(Inspections != null)
+        {
+            await JS.InvokeVoidAsync("window.DataTables3.destroyDataTable");
+            await JS.InvokeVoidAsync("window.DataTables3.buildDataTable");
+        }
+    }
+    public async void Dispose()
+    {
+        await JS.InvokeVoidAsync("window.DataTables3.destroyDataTable");
+    }
+}

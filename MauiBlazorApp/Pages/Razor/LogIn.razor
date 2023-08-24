@@ -1,0 +1,72 @@
+﻿@page "/login"
+@code {
+    private bool showPass = false;
+    private string passwordInputType = "password";
+    private string passwordIconClass = "mdi mdi-eye show_password";
+
+    private void TogglePasswordVisibility(MouseEventArgs args)
+    {
+        showPass = !showPass;
+        passwordInputType = showPass ? "text" : "password";
+        passwordIconClass = showPass ? "mdi mdi-eye-off" : "mdi mdi-eye";
+    }
+ }
+<div class="limit">
+    <div class="login-container">
+        <div class="bb-login">
+            <form class="bb-form validate-form">
+                <span class="bb-form-title p-b-26"> Welcome to FRCM </span>
+                <div class="wrap-input100 validate-input">
+                    <input class="input100" type="text" name="username" @bind="loginModel.Username">
+                    <span class="bbb-input" data-placeholder="Username"></span>
+                </div>
+                <div class="wrap-input100 validate-input">
+                    <span class="btn-show-pass" @onclick="TogglePasswordVisibility"> <i class="@passwordIconClass"></i> </span>
+                    <input class="input100" type="@passwordInputType" name="pass" @bind="loginModel.Password">
+                    <span class="bbb-input" data-placeholder="Password"></span>
+                </div>
+                <div class="login-container-form-btn">
+                    <div class="bb-login-form-btn">
+                        <div class="bb-form-bgbtn"></div> <button type="button" class="bb-form-btn" @onclick="PerformLogin"> Login </button>
+                    </div>
+                </div>
+                <div class="text-center p-t-115"> <span class="txt1"> Don&rsquo;t have an account? </span>
+                    <a class="txt2" href="#"> Sign Up </a> </div>
+            </form>
+            @if (wrongInfo)
+            {
+                <div class="alert alert-danger">
+                    Wrong Username or Password !!
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<footer class="footer fixed-bottom bg-secondary">
+    <div class="container text-center align-items-center text-info">
+        &copy; 2023 All rights reserved FRCM ; Urban Resilience Project, Rajuk
+    </div>
+</footer>
+
+@using MauiBlazorApp.Data;
+@using MauiBlazorApp.Model;
+
+@inject NavigationManager navigationManager
+@inject FRCM_API_Service service
+@code{
+    private LoginModel loginModel = new();
+    private bool wrongInfo { get; set; }
+    private async Task PerformLogin(MouseEventArgs args)
+    {
+        bool isVerified = await service.LoginVerify(loginModel);
+        //bool isVerified = false;
+        if (isVerified)
+        {
+            navigationManager.NavigateTo("/");
+        }
+        else
+        {
+            wrongInfo = true;
+        }
+    }
+}

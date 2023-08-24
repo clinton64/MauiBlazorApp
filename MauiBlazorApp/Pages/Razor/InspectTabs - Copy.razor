@@ -1,0 +1,406 @@
+﻿@page "/tabs2"
+@using Microsoft.AspNetCore.Authorization
+<!-- MultiStep Form -->
+<div class="container-fluid" id="grad1">
+    <div class="row justify-content-center mt-0">
+        <div class="col-11 col-sm-9 col-md-7 col-lg-6 text-center p-0 mt-3 mb-2">
+            <div class="card px-0 pt-4 pb-0 mt-3 mb-3">
+                <h2><strong>Sign Up Your User Account</strong></h2>
+                <p>Fill all form field to go to next step</p>
+                <div class="col-md-12 mx-0">
+                    <form id="msform">
+                        <!-- progressbar -->
+                        <ul id="progressbar">
+                            <li class="@(currentTab == 1 ? "active" : "")" id="account"><strong>Prior To Construction</strong></li>
+                            <li class="@(currentTab == 2 ? "active" : "")" id="personal"><strong>Foundation</strong></li>
+                            <li class="@(currentTab == 3 ? "active" : "")" id="payment"><strong>Plinth Ground level</strong></li>
+                            <li class="@(currentTab == 4 ? "active" : "")" id="payment"><strong>Upper Floor & Roof Level </strong></li>
+                            <li class="@(currentTab == 5 ? "active" : "")" id="confirm"><strong>Construction Completion</strong></li>
+                        </ul>
+                        <!-- fieldsets -->
+                        @if(currentTab == 1)
+                        {
+                            <fieldset>
+                                <div class="form-card">
+                                    <h2 class="fs-title">Prior to Construction</h2>
+                                    <div class="row">
+                                        <div class="col-1">
+                                            <input type="checkbox">
+                                        </div>
+                                        <div class="col-11">
+                                            <label>
+                                                Site safety plan has been reviewed with contractor, architect, and engineer
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-1">
+                                            <input type="checkbox">
+                                        </div>
+                                        <div class="col-11">
+                                            <label>
+                                                All setbacks meet minimum requirements
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-1">
+                                            <input type="checkbox">
+                                        </div>
+                                        <div class="col-11">
+                                            <label>
+                                                All road widths meet minimum requirements
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-1">
+                                            <input type="checkbox">
+                                        </div>
+                                        <div class="col-11">
+                                            <label>
+                                                Building plan has been laid out on site, stakes are in place and building configuration matches permitted drawings
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <input type="button" name="next" class="next action-button" value="Next Step" onclick="@NextClick" />
+                            </fieldset>
+                        }
+                        @if (currentTab == 2)
+                        {
+                            <fieldset>
+                                <div class="form-card">
+                                    <h2 class="fs-title">Foundation Information</h2>
+                                    <div class="row">
+                                        <div class="col-1">
+                                            <input type="checkbox">
+                                        </div>
+                                        <div class="col-11">
+                                            <label>
+                                                Minimum Continuous Footing widths and depth
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-1">
+                                            <input type="checkbox">
+                                        </div>
+                                        <div class="col-11">
+                                            <label>
+                                                Spread or isolated footing sizes nad depths
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-1">
+                                            <input type="checkbox">
+                                        </div>
+                                        <div class="col-11">
+                                            <label>
+                                                Continuous footing reinforcing
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-1">
+                                            <input type="checkbox">
+                                        </div>
+                                        <div class="col-11">
+                                            <label>
+                                                Spread or isolated footing reinforcing
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-1">
+                                            <input type="checkbox">
+                                        </div>
+                                        <div class="col-11">
+                                            <label>
+                                                Dowels for walls at continuos footings
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-1">
+                                            <input type="checkbox">
+                                        </div>
+                                        <div class="col-11">
+                                            <label>
+                                                Dowels for columns at spread or isolated footings
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-1">
+                                            <input type="checkbox">
+                                        </div>
+                                        <div class="col-11">
+                                            <label>
+                                                Clearance to reinforcing
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <input type="button" name="previous" class="previous action-button-previous" value="Previous" onclick="@PreviousClick" />
+                                <input type="button" name="make_payment" class="next action-button" value="Next Step" onclick="@NextClick" />
+                            </fieldset>
+                        }
+                        @if(currentTab == 3)
+                        {
+                            <fieldset>
+                                <div class="form-card">
+                                    <h2 class="fs-title">Plinth (Ground Level)</h2>
+                                    <div class="row">
+                                        <div class="col-1">
+                                            <input type="checkbox">
+                                        </div>
+                                        <div class="col-11">
+                                            <label>
+                                                Ground Floor Plan Configuration
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-1">
+                                            <input type="checkbox">
+                                        </div>
+                                        <div class="col-11">
+                                            <label>
+                                                Building setbacks
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-1">
+                                            <input type="checkbox">
+                                        </div>
+                                        <div class="col-11">
+                                            <label>
+                                                Location and configuration of ramps
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <input type="text" name="phno" placeholder="Total Ground Floor Area" />
+                                    <input type="text" name="phno_2" placeholder="Floor Height from Road" />
+                                </div>
+                                <input type="button" name="previous" class="previous action-button-previous" value="Previous" onclick="@PreviousClick" />
+                                <input type="button" name="next" class="next action-button" value="Next Step" onclick="@NextClick" />
+                            </fieldset>
+                        }
+                        @if (currentTab == 4)
+                        {
+                            <fieldset>
+                                <div class="form-card">
+                                    <h2 class="fs-title">Upper Floor & Roof Level</h2>
+                                    <div class="row">
+                                        <div class="col-1">
+                                            <input type="checkbox">
+                                        </div>
+                                        <div class="col-11">
+                                            <label>
+                                                Minimum Continuous Footing widths and depth
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-1">
+                                            <input type="checkbox">
+                                        </div>
+                                        <div class="col-11">
+                                            <label>
+                                                Spread or isolated footing sizes nad depths
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-1">
+                                            <input type="checkbox">
+                                        </div>
+                                        <div class="col-11">
+                                            <label>
+                                                Continuous footing reinforcing
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-1">
+                                            <input type="checkbox">
+                                        </div>
+                                        <div class="col-11">
+                                            <label>
+                                                Spread or isolated footing reinforcing
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-1">
+                                            <input type="checkbox">
+                                        </div>
+                                        <div class="col-11">
+                                            <label>
+                                                Dowels for walls at continuos footings
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-1">
+                                            <input type="checkbox">
+                                        </div>
+                                        <div class="col-11">
+                                            <label>
+                                                Dowels for columns at spread or isolated footings
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-1">
+                                            <input type="checkbox">
+                                        </div>
+                                        <div class="col-11">
+                                            <label>
+                                                Clearance to reinforcing
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <input type="button" name="previous" class="previous action-button-previous" value="Previous" onclick="@PreviousClick" />
+                                <input type="button" name="next" class="next action-button" value="Next Step" onclick="@NextClick" />
+                            </fieldset>
+                        }
+                        @if (currentTab == 5)
+                        {
+                            <fieldset>
+                                <div class="form-card">
+                                    <h2 class="fs-title">Construction Completion</h2>
+                                    <div class="row">
+                                        <div class="col-1">
+                                            <input type="checkbox">
+                                        </div>
+                                        <div class="col-11">
+                                            <label>
+                                                Minimum Continuous Footing widths and depth
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-1">
+                                            <input type="checkbox">
+                                        </div>
+                                        <div class="col-11">
+                                            <label>
+                                                Spread or isolated footing sizes nad depths
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-1">
+                                            <input type="checkbox">
+                                        </div>
+                                        <div class="col-11">
+                                            <label>
+                                                Continuous footing reinforcing
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-1">
+                                            <input type="checkbox">
+                                        </div>
+                                        <div class="col-11">
+                                            <label>
+                                                Spread or isolated footing reinforcing
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-1">
+                                            <input type="checkbox">
+                                        </div>
+                                        <div class="col-11">
+                                            <label>
+                                                Dowels for walls at continuos footings
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-1">
+                                            <input type="checkbox">
+                                        </div>
+                                        <div class="col-11">
+                                            <label>
+                                                Dowels for columns at spread or isolated footings
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-1">
+                                            <input type="checkbox">
+                                        </div>
+                                        <div class="col-11">
+                                            <label>
+                                                Clearance to reinforcing
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <input type="button" name="previous" class="previous action-button-previous" value="Previous" onclick="@PreviousClick" />
+                                <input type="button" name="make_payment" class="next action-button" value="Confirm" onclick="@NextClick" />
+                            </fieldset>
+                        }
+                        @if(currentTab == 6)
+                        {
+                            <fieldset>
+                                <div class="form-card">
+                                    <h2 class="fs-title text-center">Process Completed</h2>
+                                    <br><br>
+                                    <div class="row justify-content-center">
+                                        <div class="col-3">
+                                            <img src="https://img.icons8.com/color/96/000000/ok--v2.png" class="fit-image">
+                                        </div>
+                                    </div>
+                                    <br><br>
+                                    <div class="row justify-content-center">
+                                        <div class="col-7 text-center">
+                                            <h5> The data has been updated in the system </h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        } 
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@code{
+    private int currentTab = 1;
+    private void NextClick()
+    {
+        if (currentTab < 6)
+            currentTab++;
+    }
+    private void PreviousClick()
+    {
+        if (currentTab > 1)
+            currentTab--;
+    }
+}

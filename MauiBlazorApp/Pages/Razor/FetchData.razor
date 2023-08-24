@@ -1,0 +1,65 @@
+﻿@page "/fetchdata"
+
+@using MauiBlazorApp.Data;
+@using MauiBlazorApp.Model.ViewModels;
+@implements IDisposable
+@inject IJSRuntime JS
+
+<PageTitle>Application Files - DataTables - Rendered </PageTitle>
+
+<h1>Application Files - DataTables </h1>
+
+<p>This component demonstrates fetching data from the server. After which it will initialize a data table. Any time the data is refreshed, the datatable is destroyed and rebuilt.</p>
+
+@*<button class="btn btn-primary mb-2" type="button" @onclick="RefreshFilesAsync">Refresh</button>
+*@
+@if (files == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table" id="appFiles">
+        <thead>
+            <tr>
+                <th>FileNo</th>
+                <th>Applicant</th>
+                <th>Address</th>
+                <th>Assigned Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var file in files)
+            {
+                <tr>
+                    <td>@file.FileNo</td>
+                    <td>@file.Name </td>
+                    <td>@file.Address</td>
+                    <td>@file.AssginedDate.ToShortDateString()</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    ApplicationFile[] files { get; set; }
+    protected override void OnInitialized()
+    {
+        files = ApplicationDataService.GetAppFiles(DateTime.Now);
+    }
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await base.OnAfterRenderAsync(firstRender);
+        if(files != null)
+        {
+            await JS.InvokeVoidAsync("window.DataTables2.destroyDataTable");
+            await JS.InvokeVoidAsync("window.DataTables2.buildDataTable");
+        }
+    }
+    public async void Dispose()
+    {
+        await JS.InvokeVoidAsync("window.DataTables2.destroyDataTable");
+    }
+
+}
