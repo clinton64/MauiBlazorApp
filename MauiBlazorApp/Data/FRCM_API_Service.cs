@@ -1,9 +1,9 @@
 ﻿using MauiBlazorApp.Model;
 using MauiBlazorApp.Model.ViewModels;
 using MauiBlazorApp.Services;
+using System.Net;
 using System.Text;
-
-
+using System.Text.Json;
 
 namespace MauiBlazorApp.Data
 {
@@ -30,9 +30,9 @@ namespace MauiBlazorApp.Data
                 {
                     var responseContent = response.Result.Content.ReadAsStringAsync();
                     var tokenResponse = System.Text.Json.JsonSerializer.Deserialize<TokenResponseModel>(responseContent.Result);
-                    await _authStateProvider.Login(tokenResponse.token);
+                    _userId = tokenResponse.userId;                   
                     _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", tokenResponse.token);
-                    _userId = tokenResponse.userId;
+                    await _authStateProvider.Login(tokenResponse.token);
                     return true;
                 }
                 else
@@ -50,16 +50,16 @@ namespace MauiBlazorApp.Data
         {
             await _authStateProvider.Logout();
         }
-        /*public async Task<List<InspectionResponseModel>> GetInspections()
+        public async Task<List<InspectionResponseModel>> GetInspections()
         {
             _client.DefaultRequestHeaders.Add("inspectorId", _userId);
-            HttpResponseMessage response = await _client.GetAsync(_baseURL+ "/Frcm/Inspections").ConfigureAwait(false);
+            HttpResponseMessage response = await _client.GetAsync(_baseURL + "/Frcm/Inspections").ConfigureAwait(false);
             if (response.StatusCode == HttpStatusCode.OK)
             {
                 string responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-                Inspections = JsonConvert.DeserializeObject<List<InspectionResponseModel>>(responseContent);                
+                Inspections = JsonSerializer.Deserialize<List<InspectionResponseModel>>(responseContent);
             }
             return Inspections;
-        }*/
+        }
     }
 }

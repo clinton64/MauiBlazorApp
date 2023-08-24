@@ -40,14 +40,14 @@ else
 
 
 @code{
-    InspectionResponseModel[] Inspections { get; set; }
+    List<InspectionResponseModel> Inspections { get; set; }
     //InspectionResponseModel[] Inspections { get; set; } = null;
 
     protected override void OnInitialized()
     {
-        Inspections = ApplicationDataService.GetInspections();
-        //service.GetInspections();
-        //Inspections = service.Inspections;
+        //Inspections = ApplicationDataService.GetInspections();
+        service.GetInspections();
+        Inspections = service.Inspections;
     }
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
