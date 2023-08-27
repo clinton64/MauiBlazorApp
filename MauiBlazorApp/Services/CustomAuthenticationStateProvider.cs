@@ -27,15 +27,25 @@ namespace MauiBlazorApp.Services
             }
             return new AuthenticationState(new ClaimsPrincipal(identity));
         }
-        public async Task Login(string token)
+        public async Task Login(string token, string userID)
         {
             await SecureStorage.SetAsync("accountToken", token);
+            await SecureStorage.SetAsync ("userID", userID);
             NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
         }
         public async Task Logout()
         {
             SecureStorage.Remove("accountToken");
+            SecureStorage.Remove("userID");
             NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
+        }
+        public async Task<string> userID()
+        {
+            return await SecureStorage.GetAsync("userID");
+        }
+        public async Task<string> token()
+        {
+            return await SecureStorage.GetAsync("accountToken");
         }
     }
 }

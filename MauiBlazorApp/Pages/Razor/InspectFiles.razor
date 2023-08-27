@@ -1,9 +1,11 @@
 ﻿@page "/inspection"
 @using MauiBlazorApp.Data;
 @using MauiBlazorApp.Model.ViewModels;
+@using Microsoft.AspNetCore.Authorization;
 @implements IDisposable
 @inject IJSRuntime JS
 @inject FRCM_API_Service service
+@attribute [Authorize]
 
 <h2>Inspection Files</h2>
 <p>List of Inspection Files</p>
@@ -43,11 +45,11 @@ else
     List<InspectionResponseModel> Inspections { get; set; }
     //InspectionResponseModel[] Inspections { get; set; } = null;
 
-    protected override void OnInitialized()
+    protected override async void OnInitialized()
     {
         //Inspections = ApplicationDataService.GetInspections();
-        service.GetInspections();
-        Inspections = service.Inspections;
+        Inspections = await service.GetInspections();
+        StateHasChanged();
     }
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
