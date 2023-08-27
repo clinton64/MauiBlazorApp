@@ -39,13 +39,5 @@ namespace MauiBlazorApp.Services
             SecureStorage.Remove("userID");
             NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
         }
-        public async Task<string> userID()
-        {
-            return await SecureStorage.GetAsync("userID");
-        }
-        public async Task<string> token()
-        {
-            return await SecureStorage.GetAsync("accountToken");
-        }
     }
 }

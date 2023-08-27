@@ -48,8 +48,8 @@ namespace MauiBlazorApp.Data
         }
         public async Task<List<InspectionResponseModel>> GetInspections()
         {            
-            _client.DefaultRequestHeaders.Add("inspectorId", await _authStateProvider.userID());
-            _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", await _authStateProvider.token());
+            _client.DefaultRequestHeaders.Add("inspectorId", await SecureStorage.GetAsync("userID"));
+            _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", await SecureStorage.GetAsync("accountToken"));
             HttpResponseMessage response = await _client.GetAsync(_baseURL + "/Frcm/Inspections").ConfigureAwait(false);
             if (response.StatusCode == HttpStatusCode.OK)
             {
