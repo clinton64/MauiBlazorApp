@@ -58,5 +58,10 @@ namespace MauiBlazorApp.Data
             }
             return Inspections;
         }
+        public bool InternetConnection()
+        {
+            var currentStatus = Connectivity.NetworkAccess;
+            return currentStatus == NetworkAccess.Internet;
+        }
     }
 }

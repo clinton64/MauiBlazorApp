@@ -39,6 +39,12 @@
                     Wrong Username or Password !!
                 </div>
             }
+            @if (!internetConnection)
+            {
+                <div class="alert alert-danger">
+                    Please Check your Connectivity !!
+                </div>
+            }
         </div>
     </div>
 </div>
@@ -56,16 +62,26 @@
 @code{
     private LoginModel loginModel = new();
     private bool wrongInfo { get; set; }
+    private bool internetConnection { get; set; } = true;
     private async Task PerformLogin(MouseEventArgs args)
     {
-        bool isVerified = await service.LoginVerify(loginModel);
-        if (isVerified)
+        if (!service.InternetConnection())
         {
-            navigationManager.NavigateTo("/");
+            internetConnection = false;
         }
         else
         {
-            wrongInfo = true;
+            internetConnection = true;
+            bool isVerified = await service.LoginVerify(loginModel);
+            if (isVerified)
+            {
+                navigationManager.NavigateTo("/");
+            }
+            else
+            {
+                wrongInfo = true;
+            }
         }
+        
     }
 }

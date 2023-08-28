@@ -9,6 +9,7 @@
 
 <h2>Inspection Files</h2>
 <p>List of Inspection Files</p>
+<button class="btn btn-primary mb-2" type="button" @onclick="RefreshData">Refresh</button>
 @if(Inspections == null)
 {
     <p><em>Loading...</em></p>
@@ -39,16 +40,19 @@ else
         </tbody>
     </table>
 }
-
+ @if (!internetConnection)
+{
+    <div class="alert alert-danger">
+        Please Check your Connectivity !!
+    </div>
+}
 
 @code{
     List<InspectionResponseModel> Inspections { get; set; }
-    //InspectionResponseModel[] Inspections { get; set; } = null;
-
+    private bool internetConnection { get; set; } 
     protected override async void OnInitialized()
     {
-        //Inspections = ApplicationDataService.GetInspections();
-        Inspections = await service.GetInspections();
+        await RefreshData();
         StateHasChanged();
     }
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -63,5 +67,20 @@ else
     public async void Dispose()
     {
         await JS.InvokeVoidAsync("window.DataTables3.destroyDataTable");
+    }
+    private async Task RefreshData()
+    {
+        //Inspections = ApplicationDataService.GetInspections();
+        if (!service.InternetConnection())
+        {
+            internetConnection = false;
+        }
+        else
+        {
+            internetConnection = true;
+            Inspections = await service.GetInspections();
+        }
+        
+        
     }
 }
