@@ -4,7 +4,7 @@
 @using Microsoft.AspNetCore.Authorization;
 @implements IDisposable
 @inject IJSRuntime JS
-@inject FRCM_API_Service service
+@inject DataService service
 @attribute [Authorize]
 
 <h2>Inspection Files</h2>
@@ -13,13 +13,11 @@
     @if (!internetConnection)
     {
         <div class="col-10 alert alert-danger">
-            <p>
-                You are Offline.Please Check your Connectivity !!
-            </p>
+            <p> You are Offline.Please Check your Connectivity !! </p>
         </div>
     }
     <div class="col-2 align-self-end">
-        <button class="btn btn-primary mb-2" type="button" @onclick="RefreshData">Refresh</button>
+        <button class="btn btn-primary mb-2" type="button" @onclick="RefreshButtonClick">Refresh</button>
     </div>
 </div>
 
@@ -77,17 +75,19 @@ else
     }
     private async Task RefreshData()
     {
-        //Inspections = ApplicationDataService.GetInspections();
-        if (!service.InternetConnection())
+        if (Connectivity.NetworkAccess != NetworkAccess.Internet)
         {
             internetConnection = false;
         }
         else
         {
-            internetConnection = true;
-            Inspections = await service.GetInspections();
+            internetConnection = true;      
         }
-        
-        
+        Inspections = await service.GetData();
+
+    }
+    private void RefreshButtonClick()
+    {
+        _ = RefreshData();
     }
 }

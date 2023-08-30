@@ -25,7 +25,8 @@ public static class MauiProgram
 		builder.Services.AddScoped<CustomAuthenticationStateProvider>();
 		builder.Services.AddScoped<AuthenticationStateProvider>(s => s.GetRequiredService<CustomAuthenticationStateProvider>());
 		builder.Services.AddScoped<FRCM_API_Service>();
-		builder.Services.AddSingleton<WeatherForecastService>();
+		builder.Services.AddSingleton<DatabaseLocal>();
+		builder.Services.AddScoped<DataService>();
 		return builder.Build();
 	}
 }
