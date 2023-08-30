@@ -9,7 +9,20 @@
 
 <h2>Inspection Files</h2>
 <p>List of Inspection Files</p>
-<button class="btn btn-primary mb-2" type="button" @onclick="RefreshData">Refresh</button>
+<div class="row">
+    @if (!internetConnection)
+    {
+        <div class="col-10 alert alert-danger">
+            <p>
+                You are Offline.Please Check your Connectivity !!
+            </p>
+        </div>
+    }
+    <div class="col-2 align-self-end">
+        <button class="btn btn-primary mb-2" type="button" @onclick="RefreshData">Refresh</button>
+    </div>
+</div>
+
 @if(Inspections == null)
 {
     <p><em>Loading...</em></p>
@@ -39,12 +52,6 @@ else
             }
         </tbody>
     </table>
-}
- @if (!internetConnection)
-{
-    <div class="alert alert-danger">
-        Please Check your Connectivity !!
-    </div>
 }
 
 @code{
