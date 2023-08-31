@@ -1,10 +1,5 @@
 ﻿using MauiBlazorApp.Model.ViewModels;
 using SQLite;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MauiBlazorApp.Data
 {
@@ -14,10 +9,15 @@ namespace MauiBlazorApp.Data
         public DatabaseLocal() { }
         async Task Init()
         {
-            if (Database is not null)
-                return;
-            Database = new SQLiteAsyncConnection(Constants.DatabasePath, Constants.Flags);
-            var result = await Database.CreateTableAsync<InspectionResponseModel>();
+            if (Database is null)
+            {
+                Database = new SQLiteAsyncConnection(Constants.DatabasePath, Constants.Flags);
+            }
+            var tableInspectionExists = Database.TableMappings.Any(x => x.MappedType.Name == typeof(Phase1).Name);
+            if (!tableInspectionExists)
+            {
+                await Database.CreateTableAsync<InspectionResponseModel>();
+            }
         }
         public async Task<List<InspectionResponseModel>> GetInspectionsAsync()
         {
@@ -49,5 +49,6 @@ namespace MauiBlazorApp.Data
             await Init();
             return await Database.DeleteAsync(response);
         }
+        
     }
 }
