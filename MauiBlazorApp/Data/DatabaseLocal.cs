@@ -13,7 +13,7 @@ namespace MauiBlazorApp.Data
             {
                 Database = new SQLiteAsyncConnection(Constants.DatabasePath, Constants.Flags);
             }
-            var tableInspectionExists = Database.TableMappings.Any(x => x.MappedType.Name == typeof(Phase1).Name);
+            var tableInspectionExists = Database.TableMappings.Any(x => x.MappedType.Name == typeof(InspectionResponseModel).Name);
             if (!tableInspectionExists)
             {
                 await Database.CreateTableAsync<InspectionResponseModel>();
