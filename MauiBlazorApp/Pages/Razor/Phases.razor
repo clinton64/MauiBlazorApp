@@ -17,7 +17,7 @@
         </div>
     }
     <div class="col-2 align-self-end">
-        <button class="btn btn-primary mb-2" type="button">Refresh</button>
+        <button class="btn btn-primary mb-2" type="button" @onclick="RefreshButtonClick">Refresh</button>
     </div>
 </div>
 
@@ -51,13 +51,28 @@ else
 
 @code {
     List<Phase1> Phases1 { get; set; }
-    private bool internetConnection { get; set; } = true;
+    private bool internetConnection { get; set; }
     protected override async void OnInitialized()
     {
-        Phases1 = await service.GetPhaseData();
+        await RefreshData();
         StateHasChanged();
     }
-
+    private async Task RefreshData()
+    {
+        if (Connectivity.NetworkAccess != NetworkAccess.Internet)
+        {
+            internetConnection = false;
+        }
+        else
+        {
+            internetConnection = true;
+        }
+        Phases1 = await service.GetPhaseData();
+    }
+    private void RefreshButtonClick()
+    {
+        _ = RefreshData();
+    }
     public async void Dispose()
     {
 
