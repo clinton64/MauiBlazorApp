@@ -63,5 +63,17 @@ namespace MauiBlazorApp.Data
             var currentStatus = Connectivity.NetworkAccess;
             return currentStatus == NetworkAccess.Internet;
         }
+        public async Task<List<Phase1>> GetPhases()
+        {
+            List<Phase1> Phases = new();
+            _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", await SecureStorage.GetAsync("accountToken"));
+            HttpResponseMessage response = await _client.GetAsync(_baseURL + "/Frcm/Phases").ConfigureAwait(false);
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                string responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                Phases = JsonSerializer.Deserialize<List<Phase1>>(responseContent);
+            }
+            return Phases;
+        }
     }
 }

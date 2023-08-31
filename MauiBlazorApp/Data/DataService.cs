@@ -29,5 +29,22 @@ namespace MauiBlazorApp.Data
             }
             return data;
         }
+        public async Task<List<Phase1>> GetPhaseData()
+        {
+            List<Phase1> data = new();
+            if (_apiService.InternetConnection())
+            {
+                data = await _apiService.GetPhases();
+                foreach (var phase in data)
+                {
+                    await _dbLocal.SavePhaseAsync(phase);
+                }
+            }
+            else
+            {
+                data = await _dbLocal.GetPhasesAsync();
+            }
+            return data;
+        }
     }
 }
