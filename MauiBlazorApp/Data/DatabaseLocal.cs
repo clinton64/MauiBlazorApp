@@ -18,6 +18,11 @@ namespace MauiBlazorApp.Data
             {
                 await Database.CreateTableAsync<InspectionResponseModel>();
             }
+            var tablePhaseExists = Database.TableMappings.Any(x => x.MappedType.Name == typeof(Phase1).Name);
+            if (!tablePhaseExists)
+            {
+                await Database.CreateTableAsync<Phase1>();
+            }
         }
         public async Task<List<InspectionResponseModel>> GetInspectionsAsync()
         {
@@ -49,6 +54,26 @@ namespace MauiBlazorApp.Data
             await Init();
             return await Database.DeleteAsync(response);
         }
-        
+        public async Task<List<Phase1>> GetPhasesAsync()
+        {
+            await Init();
+            return await Database.Table<Phase1>().ToListAsync();
+        }
+        public async Task<int> SavePhaseAsync(Phase1 response)
+        {
+            await Init();
+            if (response != null)
+            {
+                var localObject = await Database.Table<Phase1>().FirstOrDefaultAsync(t => t.id == response.id);
+                if (localObject != null)
+                {
+                    return await Database.UpdateAsync(response);
+                }
+                return await Database.InsertAsync(response);
+            }
+            return 0;
+
+        }
+
     }
 }

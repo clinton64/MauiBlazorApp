@@ -1,0 +1,80 @@
+﻿@page "/phase1"
+@using MauiBlazorApp.Data;
+@using MauiBlazorApp.Model.ViewModels;
+@using Microsoft.AspNetCore.Authorization;
+@implements IDisposable
+@inject IJSRuntime JS
+@inject DataService service
+@attribute [Authorize]
+
+<h2>Phases</h2>
+<p>List of Phases</p>
+<div class="row">
+    @if (!internetConnection)
+    {
+        <div class="col-10 alert alert-danger">
+            <p> You are Offline.Please Check your Connectivity !! </p>
+        </div>
+    }
+    <div class="col-2 align-self-end">
+        <button class="btn btn-primary mb-2" type="button" @onclick="RefreshButtonClick">Refresh</button>
+    </div>
+</div>
+
+@if (Phases1 == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table" id="phase_table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Modified On</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var phase in Phases1)
+            {
+                <tr>
+                    <td>@phase.id</td>
+                    <td>@phase.name</td>
+                    <td>@phase.modifiedOn</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    List<Phase1> Phases1 { get; set; }
+    private bool internetConnection { get; set; }
+    protected override async void OnInitialized()
+    {
+        await RefreshData();
+        StateHasChanged();
+    }
+    private async Task RefreshData()
+    {
+        if (Connectivity.NetworkAccess != NetworkAccess.Internet)
+        {
+            internetConnection = false;
+        }
+        else
+        {
+            internetConnection = true;
+        }
+        Phases1 = await service.GetPhaseData();
+    }
+    private void RefreshButtonClick()
+    {
+        _ = RefreshData();
+    }
+    public async void Dispose()
+    {
+
+    }
+}
