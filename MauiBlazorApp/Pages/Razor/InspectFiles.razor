@@ -27,7 +27,7 @@
 }
 else
 {
-    <table class="table" id="frcm_table">
+    <table class="display nowrap" id="frcm_table">
         <thead>
             <tr>
                 <th>caseID</th>
@@ -60,18 +60,19 @@ else
         await RefreshData();
         StateHasChanged();
     }
+
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         await base.OnAfterRenderAsync(firstRender);
         if(Inspections != null)
         {
-            await JS.InvokeVoidAsync("window.DataTables3.destroyDataTable");
-            await JS.InvokeVoidAsync("window.DataTables3.buildDataTable");
+            await JS.InvokeVoidAsync("window.DataTables1.destroyDataTable");
+            await JS.InvokeVoidAsync("window.DataTables1.buildDataTable");
         }
     }
     public async void Dispose()
     {
-        await JS.InvokeVoidAsync("window.DataTables3.destroyDataTable");
+        await JS.InvokeVoidAsync("window.DataTables1.destroyDataTable");
     }
     private async Task RefreshData()
     {

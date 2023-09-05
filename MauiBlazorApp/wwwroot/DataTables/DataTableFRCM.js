@@ -1,7 +1,12 @@
-﻿window.DataTables3 = {
+﻿window.DataTables1 = {
     dataTable: null,
     buildDataTable: function () {
-        this.dataTable = $("#frcm_table").DataTable();
+        this.dataTable = $("#frcm_table").DataTable({
+            deferRender: true,
+            scrollCollapse: true,
+            scroller: true,
+            scrollY: 300
+        });
     },
     destroyDataTable: function () {
         if (this.dataTable) {
@@ -11,4 +16,4 @@
 }
 
 // Call the buildDataTable method to initialize the DataTable
-window.DataTables3.buildDataTable();
+window.DataTables1.buildDataTable();

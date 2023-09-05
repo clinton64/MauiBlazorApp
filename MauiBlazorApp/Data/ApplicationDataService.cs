@@ -8,7 +8,7 @@ namespace MauiBlazorApp.Data
 {
     public class ApplicationDataService
     {
-        public static ApplicationFile[] GetAppFiles(DateTime startDate)
+        public static async Task<ApplicationFile[]> GetAppFiles(DateTime startDate)
         {
             return Enumerable.Range(1, 15).Select(index => new ApplicationFile
             {

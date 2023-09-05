@@ -15,6 +15,10 @@
                     }
                 }
             }],
+            deferRender: true,
+            scrollCollapse: true,
+            scroller: true,
+            scrollY: 300
         });
     },
     destroyDataTable: function () {
