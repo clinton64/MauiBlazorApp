@@ -66,8 +66,16 @@ else
         await base.OnAfterRenderAsync(firstRender);
         if(Inspections != null)
         {
-            await JS.InvokeVoidAsync("window.DataTables1.destroyDataTable");
-            await JS.InvokeVoidAsync("window.DataTables1.buildDataTable");
+            if (firstRender)
+            {
+                await JS.InvokeVoidAsync("window.DataTables1.buildDataTable");
+            }
+            else
+            {
+                await JS.InvokeVoidAsync("window.DataTables1.destroyDataTable");
+                await JS.InvokeVoidAsync("window.DataTables1.buildDataTable");
+            }
+            
         }
     }
     public async void Dispose()

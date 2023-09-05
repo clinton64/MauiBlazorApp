@@ -53,8 +53,15 @@ else
         await base.OnAfterRenderAsync(firstRender);
         if(files != null)
         {
-            await JS.InvokeVoidAsync("window.DataTables2.destroyDataTable");
-            await JS.InvokeVoidAsync("window.DataTables2.buildDataTable");
+            if (firstRender)
+            {
+                await JS.InvokeVoidAsync("window.DataTables2.buildDataTable");
+            }
+            else
+            {
+                await JS.InvokeVoidAsync("window.DataTables2.destroyDataTable");
+                await JS.InvokeVoidAsync("window.DataTables2.buildDataTable");
+            }
         }
     }
     public async void Dispose()

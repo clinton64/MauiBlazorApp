@@ -9,8 +9,9 @@
         });
     },
     destroyDataTable: function () {
-        if (this.dataTable) {
+        if (this.dataTable && $.fn.DataTable.isDataTable('#frcm_table')) {
             this.dataTable.destroy();
+            this.dataTable = null; // Reset the dataTable variable
         }
     }
 }

@@ -22,8 +22,9 @@
         });
     },
     destroyDataTable: function () {
-        if (this.dataTable) {
+        if (this.dataTable && $.fn.DataTable.isDataTable('#appFiles')) {
             this.dataTable.destroy();
+            this.dataTable = null; // Reset the dataTable variable
         }
     }
 }
